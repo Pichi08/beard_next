@@ -9,7 +9,7 @@ export class AuthService {
             headers: {
                 'Content-Type': 'application/json'
             },
-            timeout: 3000, 
+            timeout: 6000, 
             timeoutErrorMessage: 'Request Timeout'
         });
     }

@@ -11,6 +11,8 @@ export default function LoginPage(){
     const {login:loginFunction} = useLogin();
 
     const onSubmit = async () => {
+        console.log(login)
+        console.log(password)
         if(login && password){
             loginFunction(login, password).then((res) => {
                 console.log(res);

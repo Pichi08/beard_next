@@ -1,6 +1,6 @@
 "use client";
 
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
+import { useCurrentUser } from "@/hooks/auth/userCurrentUser";
 import { useLogout } from "@/hooks/auth/useLogout";
 import { useRouter } from "next/navigation";
 
@@ -12,7 +12,7 @@ export default function ProfilePage(){
         <div className="flex flex-col items-center justify-center w-full h-full" >
             <h1>Profile Page</h1>
             <div className="font-semibold text-lg mt-4">
-                You are logged in as {currentUser?.name}
+                You are logged in as {currentUser?.email}
             </div> 
             <button 
                 onClick={() => {
