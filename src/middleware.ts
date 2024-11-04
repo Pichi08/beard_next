@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-const protectedRoutes =  ['/contact', '/profile', '/home'];
+const protectedRoutes =  ['/contact', '/profile'];
 
 
 export default function middleware( request: NextRequest){

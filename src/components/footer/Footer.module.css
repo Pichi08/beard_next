@@ -1,0 +1,100 @@
+/* components/footer/Footer.module.css */
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 2rem 1rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .footerContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section {
+    flex: 1;
+    min-width: 200px;
+    margin: 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subscriptionForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+  }
+  
+  .subscriptionInput {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .subscriptionButton {
+    padding: 0.5rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .subscriptionButton:hover {
+    background-color: #45a049;
+  }
+  
+  .linkList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .linkList li {
+    margin: 0.5rem 0;
+  }
+  
+  .linkList a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .linkList a:hover {
+    text-decoration: underline;
+  }
+  
+  .bottomFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #555;
+    font-size: 0.9rem;
+  }
+  
+  .socialIcons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .socialIcon {
+    color: white;
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+  
+  .socialIcon:hover {
+    color: #4CAF50;
+  }
+  

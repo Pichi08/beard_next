@@ -11,10 +11,10 @@ interface Props {
 
 export const  ActiveLink = ({ path, name }: Props) => {
     const pathName = usePathname();
-    console.log(pathName, path);
+    //console.log(pathName, path);
     return (
         <Link 
-        className={`p-2 m-2 text-white ${style.link} ${pathName === path ? style.active : ""}`}
+        className={`p-2 m-2 text-black ${style.link} ${pathName === path ? style.active : ""}`}
         href={path} prefetch={true}>{name}</Link>
     );
 };

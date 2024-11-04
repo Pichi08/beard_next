@@ -1,0 +1,87 @@
+/* components/product-preview/ProductPreview.module.css */
+
+.productCard {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .productCard:hover {
+    transform: scale(1.02);
+  }
+  
+  .imageContainer {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* Makes the image square */
+    overflow: hidden;
+  }
+  
+  .productImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .icons {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .iconButton {
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .iconButton:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  .productInfo {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .productName {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .productPrice {
+    font-size: 1rem;
+    color: #4CAF50;
+    margin-bottom: 8px;
+  }
+  
+  .productRating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  
+  .stars {
+    color: #FFC107;
+    margin-right: 4px;
+  }
+  
+  .reviewCount {
+    color: #888;
+    font-size: 0.8rem;
+  }
+  
