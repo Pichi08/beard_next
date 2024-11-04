@@ -6,14 +6,21 @@ import ProductPreview from '@/components/product-preview/ProductPreview';
 import { CategoryCard } from "@/components/categories-section/CategoriesSection";
 import { useProducts } from '@/hooks/products/useProducts';
 import { useCategories } from "@/hooks/categories/useCategories";
+import { useRouter } from "next/navigation";
+
 
 export default function HomePage() {
   const { products } = useProducts();
   const { categories } = useCategories();
+  const router = useRouter();
   console.log('products', products);
   console.log('categories', categories);
 
-  // Obtener solo los primeros 5 productos
+  
+  const onSubmit = async () => {
+    router.push("/products");
+  }
+
   const displayedProducts = products.slice(0, 5);
 
   return (
@@ -24,7 +31,7 @@ export default function HomePage() {
       {/* Banner principal */}
       <section className="w-full h-[400px] relative">
         <img
-          src="/path/to/hero-image.jpg" // Reemplaza con la ruta correcta
+          src="https://res.cloudinary.com/dapfvvlsy/image/upload/v1716350980/samples/coffee.jpg" // Reemplaza con la ruta correcta
           alt="Beard Care Products"
           className="w-full h-full object-cover"
         />
@@ -39,7 +46,9 @@ export default function HomePage() {
           ))}
         </div>
         <div className="flex justify-center mt-4">
-          <button className="px-6 py-3 my-4 bg-green-600 text-white rounded hover:bg-green-500">
+          <button 
+          onClick={onSubmit}
+          className="px-6 py-3 my-4 bg-green-600 text-white rounded hover:bg-green-500">
             Ver todos los productos
           </button>
         </div>
@@ -49,7 +58,7 @@ export default function HomePage() {
       <div className="h-1 bg-gray-300 my-4 mx-auto w-[90%] max-w-[1200px]" /> {/* Divisor entre secciones */}
 
       {/* Sección de categorías */}
-      <section className="w-[90%] max-w-[1200px] mx-auto my-8">
+      <section className="w-[90%] max-w-[1200px] mx-auto my-10 mb-40">
         <div className="flex items-center mb-2">
           <div className="w-4 h-9 bg-green-600 rounded mr-4"></div> {/* Cuadrado verde */}
           <h2 className="text-2xl font-bold text-green-600">Categorías</h2>
