@@ -1,10 +1,10 @@
 // interfaces/product.ts
 
 export interface Product {
-    id: number;
+    id: string;
     name: string;
     price: number;
-    imageUrl: string;
+    main_url_image: string;
     rating: number;
     // reviewCount: number;
   }

@@ -13,7 +13,7 @@ export default function ProductPreview({ product }: ProductPreviewProps) {
     <div className={styles.productCard}>
       <div className={styles.imageContainer}>
         <img
-          src={product.imageUrl}
+          src={product.main_url_image}
           alt={product.name}
           className={styles.productImage}
         />
@@ -28,7 +28,7 @@ export default function ProductPreview({ product }: ProductPreviewProps) {
       </div>
       <div className={styles.productInfo}>
         <h3 className={styles.productName}>{product.name}</h3>
-        <p className={styles.productPrice}>${product.price.toLocaleString()}</p>
+        <p className={styles.productPrice}>${product.price}</p>
         <div className={styles.productRating}>
           <span className={styles.stars}>
             {'⭐'.repeat(Math.round(product.rating))}

@@ -1,57 +1,68 @@
-// app/home/page.tsx
 "use client"
 
-import styles from './home.module.css';
 import { Navbar } from "@/components/nav-bar/NavBar";
 import Footer from '@/components/footer/Footer';
 import ProductPreview from '@/components/product-preview/ProductPreview';
+import { CategoryCard } from "@/components/categories-section/CategoriesSection";
 import { useProducts } from '@/hooks/products/useProducts';
-import { Product } from '@/interfaces/product';
-import { useCurrentUser } from '@/hooks/auth/userCurrentUser';
-import { useEffect, useState } from 'react';
+import { useCategories } from "@/hooks/categories/useCategories";
 
 export default function HomePage() {
-  // Call the hook to get products data
-  // const { products } = useProducts();
-  const { user: currentUser } = useCurrentUser();
   const { products } = useProducts();
-  // const productList: Product[] = await products(currentUser?.token); // Specify productList type as Product[]
-  //console.log(currentUser?.token)
-  console.log('products', products)
+  const { categories } = useCategories();
+  console.log('products', products);
+  console.log('categories', categories);
 
+  // Obtener solo los primeros 5 productos
+  const displayedProducts = products.slice(0, 5);
 
   return (
-    <div className={styles.container}>
-      {/* Navigation */}
+    <div className="flex flex-col bg-white w-full">
+      {/* Navegación */}
       <Navbar />
 
-      {/* Hero Banner */}
-      <section className={styles.hero}>
+      {/* Banner principal */}
+      <section className="w-full h-[400px] relative">
         <img
-          src="/path/to/hero-image.jpg" // Replace with actual path
+          src="/path/to/hero-image.jpg" // Reemplaza con la ruta correcta
           alt="Beard Care Products"
-          className={styles.heroImage}
+          className="w-full h-full object-cover"
         />
       </section>
 
-      {/* Product Preview Section */}
-      <section className={styles.products}>
-        <h2 className={styles.sectionTitle}>Productos Destacados</h2>
-        <div className={styles.productList}>
-          {/* {productList.map((product: Product) => (
-            <ProductPreview key={product.id} product={product} />
-          ))} */}
+      {/* Sección de productos destacados */}
+      <section className="w-[90%] max-w-[1200px] mx-auto my-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Productos Destacados</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {displayedProducts.map((product, index) => (
+            <ProductPreview key={index} product={product} />
+          ))}
         </div>
-        <button className={styles.viewAllButton}>Ver todos los productos</button>
+        <div className="flex justify-center mt-4">
+          <button className="px-6 py-3 my-4 bg-green-600 text-white rounded hover:bg-green-500">
+            Ver todos los productos
+          </button>
+        </div>
       </section>
 
-      {/* Categories Section */}
-      <section className={styles.categories}>
-        <h2 className={styles.sectionTitle}>Buscar por categorías</h2>
-        {/* <CategoriesSection /> */}
+      {/* Divisor */}
+      <div className="h-1 bg-gray-300 my-4 mx-auto w-[90%] max-w-[1200px]" /> {/* Divisor entre secciones */}
+
+      {/* Sección de categorías */}
+      <section className="w-[90%] max-w-[1200px] mx-auto my-8">
+        <div className="flex items-center mb-2">
+          <div className="w-4 h-9 bg-green-600 rounded mr-4"></div> {/* Cuadrado verde */}
+          <h2 className="text-2xl font-bold text-green-600">Categorías</h2>
+        </div>
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">Buscar por categorías</h2> {/* Nuevo h2 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {categories.map((category, index) => (
+            <CategoryCard key={index} name={category.name} image={category.url_image} />
+          ))}
+        </div>
       </section>
 
-      {/* Footer */}
+      {/* Pie de página */}
       <Footer />
     </div>
   );
