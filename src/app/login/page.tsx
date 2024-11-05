@@ -1,6 +1,8 @@
 "use client";
 
 import { useLogin } from "@/hooks/auth/useLogin";
+import { Navbar } from "@/components/nav-bar/NavBar";
+import Footer from '@/components/footer/Footer';
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -30,40 +32,58 @@ export default function LoginPage() {
         }
     };
 
-    return (
-        <div className="flex h-screen bg-white">
-            {/* Imagen a la izquierda */}
-            <div className="w-1/2 flex items-center justify-center">
-                <img src="https://res.cloudinary.com/dapfvvlsy/image/upload/v1730695166/Group_1000005936_qruihs.png" alt="Login" className="w-full h-auto" />
-            </div>
-            {/* Formulario a la derecha */}
-            <div className="w-1/2 flex flex-col items-center justify-center p-8">
-                <h1 className="text-2xl font-bold mb-4 text-black">Iniciar Sesión</h1>
-                <label className="mt-4 text-black"></label>
-                <input
-                    type="text"
-                    placeholder="Correo"
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
-                    className="w-80 border-b border-black text-black placeholder-gray-500 focus:outline-none focus:border-[#4CAF50] transition-colors"
-                />
+    const redirectToRegister = () => {
+        router.push("/register");
+    };
 
-                <label className="mt-4 text-black"></label>
-                <input
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-80 border-b border-black text-black placeholder-gray-500 focus:outline-none focus:border-[#4CAF50] transition-colors"
-                />
-             
-                <button
-                    onClick={onSubmit}
-                    className="mt-4 p-2 bg-[#4CAF50] text-white rounded hover:bg-green-600 transition-all"
-                >
-                    Iniciar Sesión
-                </button>
+    return (
+        <div className="flex flex-col bg-white w-full">
+            <Navbar />
+            <div className="flex bg-white">
+                {/* Imagen a la izquierda */}
+                <div className="w-1/2 flex items-center justify-center">
+                    <img src="https://res.cloudinary.com/dapfvvlsy/image/upload/v1730695166/Group_1000005936_qruihs.png" alt="Login" className="w-full h-auto" />
+                </div>
+                {/* Formulario a la derecha */}
+                <div className="w-1/2 flex flex-col items-center justify-center p-8">
+                    <h1 className="text-2xl font-bold mb-4 text-black">Iniciar Sesión</h1>
+                    <label className="mt-4 text-black"></label>
+                    <input
+                        type="text"
+                        placeholder="Correo"
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
+                        className="w-80 border-b border-black text-black placeholder-gray-500 focus:outline-none focus:border-[#4CAF50] transition-colors"
+                    />
+
+                    <label className="mt-4 text-black"></label>
+                    <input
+                        type="password"
+                        placeholder="Contraseña"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-80 border-b border-black text-black placeholder-gray-500 focus:outline-none focus:border-[#4CAF50] transition-colors"
+                    />
+                
+                    <button
+                        onClick={onSubmit}
+                        className="mt-4 p-2 bg-[#4CAF50] text-white rounded hover:bg-green-600 transition-all"
+                    >
+                        Iniciar Sesión
+                    </button>
+
+                    <div className="mt-4">
+                        <span className="text-gray-600">¿No tienes una cuenta? </span>
+                        <button
+                            onClick={redirectToRegister}
+                            className="text-[#4CAF50] font-semibold hover:underline ml-1"
+                        >
+                            Regístrate
+                        </button>
+                    </div>
+                </div>
             </div>
+            <Footer />
         </div>
     );
 }
