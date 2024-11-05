@@ -1,22 +1,21 @@
-"use client"
+"use client";
 
 import { Navbar } from "@/components/nav-bar/NavBar";
 import Footer from '@/components/footer/Footer';
 import Link from "next/link";
 import { useState } from 'react';
+import { useCart } from "@/hooks/cart/useInfoCart";
 
 export default function Cart() {
-  const [quantity1, setQuantity1] = useState(1);
-  const [quantity2, setQuantity2] = useState(2);
+  const { cartData } = useCart();
 
-  const subtotal1 = 203000 * quantity1;
-  const subtotal2 = 96000 * quantity2;
-  const cartSubtotal = subtotal1 + subtotal2;
+  // Calculate cart subtotal dynamically from cart items
+  const cartSubtotal = cartData?.cart?.items.reduce((sum, item) => sum + parseFloat(item.total), 0) || 0;
   const shipping = 0;
   const total = cartSubtotal + shipping;
 
   return (
-    <div className=" flex flex-col bg-white w-full">
+    <div className="flex flex-col bg-white w-full">
       <Navbar />
       <div className="p-8 bg-white">
         <div className="mb-4 text-gray-600">
@@ -31,45 +30,18 @@ export default function Cart() {
             <span>Subtotal</span>
           </div>
 
-          <div className=" text-gray-800 px-6 py-4 border-b grid grid-cols-4 items-center">
-            <div className="flex items-center space-x-4">
-              <img src="/path/to/image1.jpg" alt="Funda para cojín" className="w-16 h-16" />
-              <span>Funda para cojín</span>
+          {cartData?.cart?.items.map((item) => (
+            <div key={item.id} className="text-gray-800 px-6 py-4 border-b grid grid-cols-4 items-center">
+              <div className="flex items-center space-x-4">
+                {/* Replace this placeholder with actual product image if available */}
+                <img src={item.product.main_url_image} alt={item.product.name} className="w-16 h-16" />
+                <span>{item.product.name}</span>
+              </div>
+              <span>${parseFloat(item.product.price).toLocaleString('es-CO')}</span>
+              <span>{item.quantity}</span>
+              <span>${parseFloat(item.total).toLocaleString('es-CO')}</span>
             </div>
-            <span>$203.000</span>
-            <select
-              value={quantity1}
-              onChange={(e) => setQuantity1(Number(e.target.value))} // Convert to number
-              className="border rounded p-2 w-16 text-center"
-            >
-              {[1, 2, 3, 4, 5].map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
-            </select>
-            <span>${subtotal1.toLocaleString('es-CO')}</span>
-          </div>
-
-          <div className="text-gray-800 px-6 py-4 border-b grid grid-cols-4 items-center">
-            <div className="flex items-center space-x-4">
-              <img src="/path/to/image2.jpg" alt="Contenedor en Cumare" className="w-16 h-16" />
-              <span>Contenedor en Cumare</span>
-            </div>
-            <span>$96.000</span>
-            <select
-              value={quantity2}
-              onChange={(e) => setQuantity2(Number(e.target.value))} // Convert to number
-              className="border rounded p-2 p-2 w-16 text-center"
-            >
-              {[1, 2, 3, 4, 5].map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
-            </select>
-            <span>${subtotal2.toLocaleString('es-CO')}</span>
-          </div>
+          ))}
         </div>
 
         <div className="flex justify-between items-center mt-6">
@@ -107,7 +79,7 @@ export default function Cart() {
             <button className="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded-md">
               Proceder al pago
             </button>
-          </Link>    
+          </Link>
         </div>
       </div>
       <Footer />

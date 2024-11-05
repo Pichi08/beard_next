@@ -15,11 +15,6 @@ export class RegisterUserService {
     }
 
     public async registerUser(name: string, lastname: string, email: string, password: string, phone: string) {
-        // const name = "Jacobos"
-        // const lastname = "Guarnizos"
-        // const password = "Chacal1125"
-        // const email = "hptavida@gmail.com"
-        // const phone = "+57 3001234567"
         const billingAddress = "null";
         const shippingAddress = "null";
         const country = "null";
