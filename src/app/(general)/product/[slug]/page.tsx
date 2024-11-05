@@ -1,31 +1,36 @@
-import { notFound } from "next/navigation";
+import React from 'react';
+import { Metadata } from 'next';
+import { ProductsService } from '@/services/products.service';
+import Footer from '@/components/footer/Footer'; // Importando el Footer
+import ProductDetail from '@/components/product-detail/ProductDetail';
 
 interface Props {
-    params: {
-        slug: string;
-    };
+   params: { slug: string }
 }
 
-export async function generateMetadata({params}: Props) {
-    const {slug} = await params;
+async function getProduct(slug: string) {
+    const productService =  new ProductsService("https://beard-nest.vercel.app/");
+    const response = await productService.getProductBySlug(slug);
+    return response;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata | undefined> {
+    const product = await getProduct(params.slug);
+
     return {
-        title: `Product Detail ${slug}`, 
-        description: `Product Detail ${slug}`
+        title: product.name,
+        description: product.description,
     };
 }
 
-export default async function ProductDetail({params}: Props){
-    const  {slug} = await params;
-
+async function ProductDetailPage({ params }: Props){
     return (
         <div>
-
-            <h1>Product Detail</h1>
-            <p>Product ID: {slug}</p>
+            <ProductDetail slug={params.slug} />
+            <Footer />
+            
         </div>
     );
-
-
-
-
 }
+
+export default ProductDetailPage;

@@ -3,14 +3,23 @@
 import styles from './ProductPreview.module.css';
 import { FaHeart, FaEye } from 'react-icons/fa';
 import { Product } from '@/interfaces/product';
+import { useRouter } from "next/navigation";
+
 
 interface ProductPreviewProps {
   product: Product;
 }
 
 export default function ProductPreview({ product }: ProductPreviewProps) {
+
+  const router = useRouter();
+
+  const handlleClick = () => {
+    router.push(`/product/${product.slug}`);
+  }
+
   return (
-    <div className={styles.productCard}>
+    <div className={styles.productCard} onClick={handlleClick}>
       <div className={styles.imageContainer}>
         <img
           src={product.main_url_image}

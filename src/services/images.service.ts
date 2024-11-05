@@ -1,6 +1,6 @@
 import axios, {AxiosInstance}  from 'axios';
 
-export class ProductsService {
+export class ImagesService {
     protected readonly axios: AxiosInstance;
 
     constructor(url: string) {
@@ -14,16 +14,8 @@ export class ProductsService {
         });
     }
 
-    public async getAllProducts(page: number =1,limit: number = 3) {
-        const response = await this.axios.get(`/products?page=${page}&limit=${limit}`,
-            {
-
-            });
-        return response.data;
-    }
-
-    public async getProductBySlug(slug: string) {
-        const response = await this.axios.get(`/products/${slug}`,
+    public async getAllImagesOfProduct(id: string) {
+        const response = await this.axios.get(`/images/${id}`,
             {
                 
             });
