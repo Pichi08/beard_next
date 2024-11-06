@@ -86,11 +86,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
 
   const handleAddCart = () => {
     const totalPrice = count * product?.price
-    console.log(totalPrice)
-    console.log(count)
-    console.log(product?.id)
-    console.log(cartData?.cart?.id)
+    // console.log(totalPrice)
+    // console.log(count)
+    // console.log(product?.id)
+    // console.log(cartData?.cart?.id)
     addToCartFunction(totalPrice, count, product.id, cartData?.cart?.id);
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
+    router.push("/cart")
+    // router.reload();
   }
 
   const isAdmin =
