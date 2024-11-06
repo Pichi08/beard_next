@@ -9,13 +9,15 @@ interface Props {
 }
 
 async function getProduct(slug: string) {
-    const productService =  new ProductsService("https://beard-nest.vercel.app/");
+    const productService = new ProductsService("https://beard-nest.vercel.app/");
     const response = await productService.getProductBySlug(slug);
     return response;
 }
 
+// Ensure params is destructured correctly in async function
 export async function generateMetadata({ params }: Props): Promise<Metadata | undefined> {
-    const product = await getProduct(params.slug);
+    const { slug } = params;  // Destructure slug from params
+    const product = await getProduct(slug);
 
     return {
         title: product.name,
@@ -23,12 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata | un
     };
 }
 
-async function ProductDetailPage({ params }: Props){
+async function ProductDetailPage({ params }: Props) {
+    const { slug } = params;  // Destructure slug from params here as well
+
     return (
         <div>
-            <ProductDetail slug={params.slug} />
+            <ProductDetail slug={slug} />
             <Footer />
-            
         </div>
     );
 }
