@@ -6,11 +6,14 @@ import Link from "next/link";
 import { useState } from 'react';
 import { useCart } from "@/hooks/cart/useInfoCart";
 import { useShipping } from "@/hooks/shipping/useShipping"
+import { useDeleteCartItems } from "@/hooks/cart/useDeleteCarItems"
+import { useRouter } from "next/router";
 
 export default function CheckoutPage() {
   const { cartData } = useCart();
-  // const router = useRouter();
+  const router = useRouter();
   const { shippingInfo: shippingFunction } = useShipping();
+  const { deleteCartItems: deleteCartItemsFunction } = useDeleteCartItems();
 
   // Form State
   const [cardNumber, setCardNumber] = useState("");
@@ -38,9 +41,11 @@ export default function CheckoutPage() {
 
     shippingFunction(newAddress, newAddress, total)
       .then((res) => {
+        
         alert("Orden completada y en revisión");
+        deleteCartItemsFunction(cartData?.cart?.id);
         console.log(res)
-        // router.push("/user");
+        router.push("/user");
       })
       .catch((err) => {
         console.log(err)
