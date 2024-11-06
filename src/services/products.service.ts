@@ -29,4 +29,15 @@ export class ProductsService {
             });
         return response.data;
     }
+
+    public async deleteProduct(token: string, slug: string) {
+        const response = await this.axios.delete(`/products/slug/${slug}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+                
+            });
+        return response.status;
+    }
 }

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ActiveLink } from "../active-link/ActiveLink";
 import { useLogout } from "@/hooks/auth/useLogout";
 import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/auth/userCurrentUser";
 
 const navItems = [
   { name: "Inicio", path: "/home" },
@@ -19,6 +20,9 @@ export const Navbar = () => {
 
   const {logout} = useLogout();
   const router = useRouter();
+  const { user: currentUser } = useCurrentUser();
+
+  const isLogged = currentUser!= null;
 
   return (
     <header className="top-0 shadow-md flex items-center justify-between px-1 py-2 z-30 bg-white">
@@ -44,14 +48,14 @@ export const Navbar = () => {
         <Link href="/cart">
           <IoCartOutline className="h-6 w-6 text-gray-700 hover:text-green-500 transition-colors duration-200" />
         </Link>
-        <button 
+        {isLogged && (<button 
           onClick={() => {
           logout();
           router.push("/login");
           }
                 }>
           <CiLogout className="h-6 w-6 text-gray-700 hover:text-green-500 transition-colors duration-200" strokeWidth="0.5" />
-        </button>
+        </button>)}
       </div>
     </header>
   );

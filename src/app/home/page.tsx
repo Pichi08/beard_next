@@ -12,7 +12,7 @@ import { ProductsService } from "@/services/products.service";
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5; // Cantidad de productos por página
+  const pageSize = 5;
   const { categories } = useCategories();
   const router = useRouter();
 

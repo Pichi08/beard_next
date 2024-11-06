@@ -3,4 +3,5 @@ export interface Profile {
     lastname: string;
     email: string;
     phone: string;
+    roles: string[];
 }
