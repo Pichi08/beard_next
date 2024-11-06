@@ -11,7 +11,7 @@ import { ProductsService } from "@/services/products.service";
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
   const pageSize = 5;
   const { categories } = useCategories();
   const router = useRouter();
