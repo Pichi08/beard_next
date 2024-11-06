@@ -18,6 +18,8 @@ import { useCurrentUser } from "@/hooks/auth/userCurrentUser";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAddToCart } from "@/hooks/cart/useAddToCart";
+import { useCart } from "@/hooks/cart/useInfoCart";
 
 interface ProductDetailProps {
   slug: string;
@@ -36,6 +38,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
   const { profileData } = useProfile();
   const { user: currentUser } = useCurrentUser();
   const router = useRouter();
+  const { itemCart: addToCartFunction } = useAddToCart();
+  const { cartData } = useCart();
+
 
   const productService = new ProductsService("https://beard-nest.vercel.app/");
 
@@ -79,6 +84,20 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
   const handleCountChange = (value: number) => {
     setCount((prev) => Math.max(prev + value, 1));
   };
+
+  const handleAddCart = () => {
+    const totalPrice = count * product?.price
+    // console.log(totalPrice)
+    // console.log(count)
+    // console.log(product?.id)
+    // console.log(cartData?.cart?.id)
+    addToCartFunction(totalPrice, count, product.id, cartData?.cart?.id);
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
+    router.push("/cart")
+    // router.reload();
+  }
 
   const handlleClickEditButton = () => {
     router.push(`/product/edit/${slug}`);
@@ -124,6 +143,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
   if (!product) {
     return <div className="text-center py-10">Cargando...</div>;
   }
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 mt-10">
@@ -230,7 +250,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
             </div>
 
             {/* Botón de añadir al carrito */}
-            <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    onClick={handleAddCart}>
               Añadir al carrito
             </button>
           </div>
