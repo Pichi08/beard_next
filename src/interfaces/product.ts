@@ -1,4 +1,5 @@
 import { Category } from "./category";
+import { Images } from "./images";
 export interface Product {
     id: string;
     slug: string;
@@ -9,6 +10,6 @@ export interface Product {
     main_url_image: string;
     rating: number;
     category: Category;
-    // reviewCount: number;
-  }
+    images: Images[];
+}
   
