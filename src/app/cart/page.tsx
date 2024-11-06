@@ -3,7 +3,7 @@
 import { Navbar } from "@/components/nav-bar/NavBar";
 import Footer from '@/components/footer/Footer';
 import Link from "next/link";
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useCart } from "@/hooks/cart/useInfoCart";
 
 export default function Cart() {

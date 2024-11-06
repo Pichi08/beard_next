@@ -11,7 +11,7 @@ export const useRegister = () => {
             // console.log(registerUser)
             return registerUser as RegisterUser;
         } catch (err) {
-            console.error("Error params register")
+            console.error("Error params register: ", err)
         }
         
     }

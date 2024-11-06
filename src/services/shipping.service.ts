@@ -1,6 +1,6 @@
 import axios, {AxiosInstance}  from 'axios';
 
-export class RegisterUserService {
+export class ShippingService {
     protected readonly axios: AxiosInstance;
 
     constructor(url: string) {
@@ -14,29 +14,26 @@ export class RegisterUserService {
         });
     }
 
-    public async registerUser(name: string, lastname: string, email: string, password: string, phone: string) {
-        const billingAddress = "null";
-        const shippingAddress = "null";
-        const country = "null";
-        const city = "null";
-        console.log(name, lastname, email, password, billingAddress, shippingAddress, phone, country, city)
+    public async addShipping(token: string, shipping_address: string, order_address: string, amount: number, customer_email: string) {
 
         try {
-            const response = await this.axios.post('/users/customers', {
-                name,
-                lastname,
-                email,
-                password,
-                billingAddress,
-                shippingAddress,
-                phone,
-                country,
-                city
+            console.log("token: ", token)
+            console.log("email", customer_email)
+            const response = await this.axios.post('/orders', {
+                shipping_address,
+                order_address,
+                amount,
+                customer_email
+            },
+            { 
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
+                console.log("Error ni el mas hpta: ",error)
                 // Extract and log the specific response text if available
                 // console.log(error.response?.data?.message || "An error occurred");
                 return error.response?.data?.message || "An error occurred";

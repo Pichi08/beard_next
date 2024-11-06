@@ -1,5 +1,5 @@
 // useProducts.ts
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Product } from "@/interfaces/product";
 import { ProductsService } from "@/services/products.service";
 

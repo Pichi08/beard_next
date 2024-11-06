@@ -4,13 +4,13 @@ import { useCurrentUser } from "@/hooks/auth/userCurrentUser";
 import { Navbar } from "@/components/nav-bar/NavBar";
 import Footer from "@/components/footer/Footer";
 import { useRouter } from "next/navigation";
-import { useProfile } from "@/hooks/profile/useProfile";
+import { useProfileOrder } from "@/hooks/profile/useProfileOrder";
 import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
     const router = useRouter();
     const { user: currentUser, isLoading: isUserLoading } = useCurrentUser(); // Assume useCurrentUser provides isLoading
-    const { profileData } = useProfile();
+    const { profileOrderData } = useProfileOrder();
     const [isProfileLoading, setIsProfileLoading] = useState(true);
 
     useEffect(() => {
@@ -21,10 +21,10 @@ export default function ProfilePage() {
     }, [isUserLoading, currentUser, router]);
 
     useEffect(() => {
-        if (profileData) {
+        if (profileOrderData) {
             setIsProfileLoading(false);
         }
-    }, [profileData]);
+    }, [profileOrderData]);
 
     if (isUserLoading || isProfileLoading) {
         return <div>Loading...</div>; // Optional loading spinner or message
@@ -44,10 +44,10 @@ export default function ProfilePage() {
                     <h3 className="text-gray-700 text-xl font-semibold mb-6">Personal Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {[
-                            { label: "First Name", value: profileData?.name || "" },
-                            { label: "Last Name", value: profileData?.lastname || "" },
-                            { label: "Email", value: profileData?.email || "" },
-                            { label: "Mobile No.", value: profileData?.phone || "" },
+                            { label: "First Name", value: profileOrderData?.name || "" },
+                            { label: "Last Name", value: profileOrderData?.lastname || "" },
+                            { label: "Email", value: profileOrderData?.email || "" },
+                            { label: "Mobile No.", value: profileOrderData?.phone || "" },
                         ].map((field, index) => (
                             <div key={index} className="p-4 bg-gray-100 rounded-md">
                                 <label className="text-gray-600 text-sm font-medium">{field.label}</label>
@@ -68,24 +68,27 @@ export default function ProfilePage() {
 
                 <div className="bg-white p-8 rounded-lg shadow-md mb-8">
                     <h3 className="text-gray-700 text-xl font-semibold mb-6">Order History</h3>
-                    {/* {profileData.orderHistory?.length > 0 ? (
+                    {profileOrderData.orders?.length > 0 ? (
                         <ul className="divide-y divide-gray-200">
-                            {profileData.orderHistory.map((order, index) => (
-                                <li key={index} className="py-6 flex justify-between items-center">
+                            {profileOrderData.orders.map((order, index) => (
+                                <li key={index} className="py-6 flex flex-col md:flex-row justify-between items-start md:items-center">
                                     <div>
                                         <p className="text-gray-800 font-medium">Order #{order.id}</p>
-                                        <p className="text-gray-600 text-sm">Placed on {order.date}</p>
+                                        <p className="text-gray-600 text-sm">Shipping Address: {order.shipping_address}</p>
+                                        <p className="text-gray-600 text-sm">
+                                            Order Date: {order.day}/{order.month}/{order.year}
+                                        </p>
+                                        <p className="text-gray-600 text-sm">Order Status: {order.order_status}</p>
                                     </div>
                                     <div>
-                                        <p className="text-gray-800 font-medium">{order.total}</p>
-                                        <p className={`text-sm ${order.status === 'Delivered' ? 'text-green-600' : 'text-yellow-600'}`}>{order.status}</p>
+                                        <p className="text-gray-800 font-medium">Total: ${order.amount.toLocaleString('es-CO')}</p>
                                     </div>
                                 </li>
                             ))}
                         </ul>
-                    ) : ( */}
+                    ) : (
                         <p className="text-gray-600">You have no orders yet.</p>
-                    {/* )} */}
+                    )}
                 </div>
             </div>
             <Footer />
