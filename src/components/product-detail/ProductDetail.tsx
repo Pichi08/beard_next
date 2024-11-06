@@ -16,8 +16,8 @@ import { useProfile } from "@/hooks/profile/useProfile";
 import DeleteProductModal from "@/components/delete-product-modal/DeleteProductModal";
 import { useCurrentUser } from "@/hooks/auth/userCurrentUser";
 import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";  // Importamos react-toastify
-import "react-toastify/dist/ReactToastify.css";  // Importamos los estilos
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ProductDetailProps {
   slug: string;
@@ -36,9 +36,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
   const { profileData } = useProfile();
   const { user: currentUser } = useCurrentUser();
   const router = useRouter();
-
-
-
 
   const productService = new ProductsService("https://beard-nest.vercel.app/");
 
@@ -83,42 +80,46 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
     setCount((prev) => Math.max(prev + value, 1));
   };
 
+  const handlleClickEditButton = () => {
+    router.push(`/product/edit/${slug}`);
+  }
+
+
   const isAdmin =
     profileData && profileData.roles && profileData.roles.includes("admin");
 
-    const handleDeleteProduct = async () => {
-      if (!product) return;
-      try {
-        if (currentUser?.token) {
-          const response = await productService.deleteProduct(currentUser.token, product.slug);
-          console.log(response);
-          toast.success("Producto eliminado con éxito", {
-            position: "top-right",
-            autoClose: 5000,  // 5 segundos de duración
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+  const handleDeleteProduct = async () => {
+    if (!product) return;
+    try {
+      if (currentUser?.token) {
+        const response = await productService.deleteProduct(
+          currentUser.token,
+          product.slug
+        );
+        toast.success("Producto eliminado con éxito", {
+          position: "top-right",
+          autoClose: 5000, // 5 segundos de duración
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
 
-          setTimeout(() => {
-            router.push("/products");
-          }, 1500);
-          
-          
-        } else {
-          toast.error("Token de usuario no disponible");
-          console.error("User token is undefined");
-        }
-        setDeleteModalOpen(false);
-        //router.push("/products");
-      } catch (error) {
-        console.error("Error al eliminar el producto:", error);
-        toast.error("Error al eliminar el producto"); 
+        setTimeout(() => {
+          router.push("/products");
+        }, 1500);
+      } else {
+        toast.error("Token de usuario no disponible");
+        console.error("User token is undefined");
       }
-    };
-    
+      setDeleteModalOpen(false);
+      //router.push("/products");
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
+      toast.error("Error al eliminar el producto");
+    }
+  };
 
   if (!product) {
     return <div className="text-center py-10">Cargando...</div>;
@@ -170,27 +171,27 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ slug }) => {
               {product.name}
             </h1>
             {isAdmin && (
-              <div className="space-x-2">
-              <button
-                className="bg-red-600 text-white p-2 rounded hover:bg-red-700"
-                onClick={() => setDeleteModalOpen(true)}
-              >
-                <DeleteIcon fontSize="small" />
-              </button>
-              <button
-                className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-              >
-                <EditIcon fontSize="small" />
-              </button>
+              <div className="flex space-x-2 ml-auto">
+                <button
+                  className="bg-red-600 text-white p-2 rounded hover:bg-red-700"
+                  onClick={() => setDeleteModalOpen(true)}
+                >
+                  <DeleteIcon fontSize="small" />
+                </button>
+                <button className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                onClick={handlleClickEditButton}>
+                  <EditIcon fontSize="small" />
+                </button>
               </div>
             )}
-            <DeleteProductModal
+            <DeleteProductModal 
               open={isDeleteModalOpen}
               onClose={() => setDeleteModalOpen(false)}
               onConfirm={handleDeleteProduct}
-              productName={product ? product.name : ""}
-            />
+              productName={product ? product.name: ""}
+              />
           </div>
+
           <p className="text-black text-xl font-semibold mb-4">{`$${product.price}`}</p>
           <p className="text-black text-gray-700 mb-4">{product.description}</p>
 

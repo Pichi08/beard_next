@@ -5,7 +5,7 @@ export default function NotFound(){
         <div>
             <h1>Product Not Found</h1>
             <p>Could not find product with id</p>
-            <Link href="/">Return to Home</Link>
+            <Link href="/home">Return to Home</Link>
         </div>
     );
 }

@@ -13,7 +13,6 @@ export default function GeneralLayout({
       {/* <Providers> */}
         {children}
       {/* </Providers> */}
-      <Footer />
     </div>
   );
 }
