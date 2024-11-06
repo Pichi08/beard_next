@@ -31,8 +31,8 @@ export default function Products() {
     fetchData();
   }, [currentPage, pageSize]);
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
+  // const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  // const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
 
   /*
   const filteredProducts = products.filter((product) => {

@@ -6,7 +6,6 @@ import { useImage } from "@/hooks/images/useImages";
 import { Product } from "@/interfaces/product";
 import { Image } from "@/interfaces/image";
 import Footer from "../footer/Footer";
-import ProductPreview from "@/components/product-preview/ProductPreview";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 

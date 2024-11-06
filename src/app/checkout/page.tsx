@@ -5,21 +5,49 @@ import Footer from '@/components/footer/Footer';
 import Link from "next/link";
 import { useState } from 'react';
 import { useCart } from "@/hooks/cart/useInfoCart";
+import { useShipping } from "@/hooks/shipping/useShipping"
 
 export default function CheckoutPage() {
   const { cartData } = useCart();
-  console.log("Checkout Items", cartData);
+  // const router = useRouter();
+  const { shippingInfo: shippingFunction } = useShipping();
 
-  // Credit Card State
+  // Form State
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
+  const [id, setId] = useState("");
+  const [address, setAddress] = useState("");
+  const [apto, setApto] = useState("");
+  const [city, setCity] = useState("");
 
   // Calculate cart subtotal dynamically from cart items
   const cartSubtotal = cartData?.cart?.items.reduce((sum, item) => sum + parseFloat(item.total), 0) || 0;
   const tax = cartSubtotal * 0.19; // Example tax rate of 19%
   const shipping = 0;
   const total = cartSubtotal + tax + shipping;
+
+  // Handle Place Order
+  const handlePlaceOrder = () => {
+    if (!id || !address || !city || !cardNumber || !expiryDate || !cvv) {
+      alert("Por favor complete todos los campos obligatorios.");
+      return;
+    }
+
+    const newAddress = address + ", " + city + ", " + apto
+
+    shippingFunction(newAddress, newAddress, total)
+      .then((res) => {
+        alert("Orden completada y en revisión");
+        console.log(res)
+        // router.push("/user");
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    
+    
+  };
 
   return (
     <div className="flex flex-col bg-white w-full">
@@ -38,6 +66,9 @@ export default function CheckoutPage() {
                     type="text"
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder="Número de Identificación"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                    style={{ color: id ? 'black' : 'gray' }}
                   />
                 </div>
                 <div>
@@ -46,6 +77,9 @@ export default function CheckoutPage() {
                     type="text"
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder="Dirección"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    style={{ color: address ? 'black' : 'gray' }}
                   />
                 </div>
                 <div>
@@ -54,6 +88,9 @@ export default function CheckoutPage() {
                     type="text"
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder="Apartamento, piso, etc. (opcional)"
+                    value={apto}
+                    onChange={(e) => setApto(e.target.value)}
+                    style={{ color: apto ? 'black' : 'gray' }}
                   />
                 </div>
                 <div>
@@ -62,6 +99,9 @@ export default function CheckoutPage() {
                     type="text"
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder="Municipio/Ciudad"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    style={{ color: city ? 'black' : 'gray' }}
                   />
                 </div>
               </form>
@@ -89,7 +129,7 @@ export default function CheckoutPage() {
                 <span className="font-semibold">${cartSubtotal.toLocaleString('es-CO')}</span>
               </div>
               <div className="text-black flex justify-between">
-                <span>Impuestos:</span>
+                <span>Impuestos 19%:</span>
                 <span>${tax.toLocaleString('es-CO')}</span>
               </div>
               <div className="text-black flex justify-between">
@@ -154,7 +194,10 @@ export default function CheckoutPage() {
                   Aplicar Cupón
                 </button>
               </div>
-              <button className="w-full mt-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600">
+              <button
+                className="w-full mt-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600"
+                onClick={handlePlaceOrder}
+              >
                 Realizar Pedido
               </button>
             </div>
