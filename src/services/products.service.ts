@@ -8,6 +8,14 @@ interface UpdateProductInput{
     stock: number;
 }
 
+interface CreateProductInput {
+    name: string;
+    price: number | string;
+    description: string;
+    stock: number | string;
+    categoryId: string;
+}
+
 export class ProductsService {
     protected readonly axios: AxiosInstance;
 
@@ -57,8 +65,6 @@ export class ProductsService {
         return response.status;
     }
 
-
-
     public async updateProduct(slug: string, product: UpdateProductInput, token: string) {
         // Convertir `price` y `stock` a número si aún son strings
         const parsedProduct = {
@@ -75,6 +81,26 @@ export class ProductsService {
             },
         });
     
+        return response.data;
+    }
+
+    public async addProduct(token: string, product: CreateProductInput) {
+        const formData = new FormData();
+        /*
+        if (product.file) {
+            formData.append('file', product.file);
+        }
+            */
+        const parsedProduct = {
+            ...product,
+            price: typeof product.price === "string" ? parseFloat(product.price) : product.price,
+            stock: typeof product.stock === "string" ? parseInt(product.stock, 10) : product.stock,
+        };
+        const response = await this.axios.post('/products', parsedProduct, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         return response.data;
     }
     

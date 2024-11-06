@@ -21,4 +21,18 @@ export class ImagesService {
             });
         return response.data;
     }
+
+    public async addImages(token: string, productId: string, images: File[]) {
+        const formData = new FormData();
+        images.forEach(image => {
+            formData.append('images', image);
+        });
+        const response = await this.axios.post(`/images/${productId}`, formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        return response.data;
+    }
 }
